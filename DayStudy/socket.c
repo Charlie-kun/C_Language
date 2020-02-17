@@ -12,7 +12,7 @@ int main(void)
 
     serverSocket=socket(domain, type, protocol);
 
-    if(serverSocket==-1)
+    if(serverSocket==-1)   //disconnect signal is -1
     {
         printf("Server connnected fail!\n");
     }
