@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     if(serv_sock==-1)
         error_handling("socket() error:");
 
-    memset(&serv_adr, 0, sizeof(serv_adr));    //adress initialize
+    memset(&serv_adr, 0, sizeof(serv_adr));    //address initialize
     serv_adr.sin_family=AF_INET;
     serv_adr.sin_addr.s_addr=htonl(INADDR_ANY);
     serv_adr.sin_port=htons(atoi(argv[1]));
@@ -42,14 +42,30 @@ int main(int argc, char *argv[])
 
     for(i=0; i<5;i++)
     {
-        clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);    //agree step
+        clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);    //accept step
         if(clnt_sock==-1)
             error_handling("accept() error");
         else
-            printf("Connected client %d \n", i+1);    //connected finish
+            printf("Connected client %d \n", i+1);    //Connected!
 
-          while((str_len=read(clnt_sock, message, BUF_SIZE))!=0).   //read client message
-            write(clnt_sock, message, str_len);    //Echo client message
+          //while((str_len=read(clnt_sock, message, BUF_SIZE))!=0)
+            //write(clnt_sock, message, str_len);
+
+        while((str_len=read(clnt_sock, message, BUF_SIZE))!=0)    //read client message
+        {
+            //write(serv_sock, message, str_len);
+	        //str_len=read(serv_sock, message, BUF_SIZE-1);
+            message[str_len]=0;    //check message 0
+            printf("Message from Client : %s", message);    //print message
+            
+            fputs("Input message: ", stdout);    //interface print
+            fgets(message,BUF_SIZE, stdin);    //keyboard input
+            write(clnt_sock, message,strlen(message));    //send cilent message
+            //write(clnt_sock, message,sizeof(stdin));
+            //write(clnt_sock, message,sizeof(message));
+            //write(clnt_sock, message,sizeof(fgets));
+            
+        }
 
         close(clnt_sock);
     }
