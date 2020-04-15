@@ -27,5 +27,5 @@ int main(int argc, char *argv[])
 			pToken = strtok(NULL,"[@]");
 		}
   
-		printf("온도:%s, 습도:%s, 조도:%s\n",pArray[1],pArray[2],pArray[3]);
+		printf("Temp:%s, MOIS:%s, Brit:%s\n",pArray[1],pArray[2],pArray[3]);
 }
